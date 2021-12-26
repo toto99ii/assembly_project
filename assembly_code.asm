@@ -142,7 +142,7 @@ proc print_man
     sub cx, 1
     sub dx, 1
     mov ah, 0ch 
-    int 10h
+    int 10h                     ;finish one hand
     sub cx, 5
     sub dx, 1
     mov ah, 0ch 
@@ -166,7 +166,7 @@ proc print_man
     int 10h
     sub dx, 1
     mov ah, 0ch 
-    int 10h
+    int 10h                 ;finish other hand
     add cx, 3
     mov ah, 0ch 
     int 10h
@@ -222,7 +222,7 @@ proc print_man
     sub cx, 1
     sub dx, 1
     mov ah, 0ch 
-    int 10h
+    int 10h                         ;finish head outline
     add cx, 2
     mov ah, 0ch 
     int 10h
@@ -237,11 +237,12 @@ proc print_man
     int 10h
     sub cx, 2
     mov ah, 0ch 
-    int 10h
+    int 10h                         ;finish head
     add cx, 1
     add dx, 5
     mov ah, 0ch 
     int 10h
+;reset
     add dx, 10
     sub cx, 2
 
