@@ -266,3 +266,4 @@ Exit:
     int 21h
 END start
 
+;now we need to make it move
