@@ -47,11 +47,12 @@ proc print_man
     push bx
     push cx
     push dx
-
     mov bh, 0h 
+    mov al, [color] 
     mov cx, [x]
     mov dx, [y]
-    mov al, [color] 
+;starting to draw a man
+;start legs
     mov ah, 0ch 
     int 10h
     add cx, 1
@@ -89,7 +90,8 @@ proc print_man
     int 10h
     add cx, 1
     mov ah, 0ch 
-    int 10h         ;finish legs
+    int 10h         
+;finish legs start body
     sub dx, 5
     mov ah, 0ch 
     int 10h
@@ -126,7 +128,8 @@ proc print_man
     int 10h
     add dx, 1
     mov ah, 0ch 
-    int 10h                     ;finish body
+    int 10h                     
+;finish body start right hand
     add cx, 6
     mov ah, 0ch 
     int 10h
@@ -142,7 +145,8 @@ proc print_man
     sub cx, 1
     sub dx, 1
     mov ah, 0ch 
-    int 10h                     ;finish one hand
+    int 10h                     
+;finish right hand start left hand
     sub cx, 5
     sub dx, 1
     mov ah, 0ch 
@@ -166,7 +170,8 @@ proc print_man
     int 10h
     sub dx, 1
     mov ah, 0ch 
-    int 10h                 ;finish other hand
+    int 10h                 
+;finish left hand start head outline
     add cx, 3
     mov ah, 0ch 
     int 10h
@@ -222,7 +227,8 @@ proc print_man
     sub cx, 1
     sub dx, 1
     mov ah, 0ch 
-    int 10h                         ;finish head outline
+    int 10h                         
+;finish head outline start inner head
     add cx, 2
     mov ah, 0ch 
     int 10h
@@ -237,12 +243,13 @@ proc print_man
     int 10h
     sub cx, 2
     mov ah, 0ch 
-    int 10h                         ;finish head
+    int 10h                         
+;finish inner head start neck
     add cx, 1
     add dx, 5
     mov ah, 0ch 
     int 10h
-;reset
+;finish neck now reset
     add dx, 10
     sub cx, 2
 
@@ -266,5 +273,3 @@ Exit:
     mov ax, 4C00h
     int 21h
 END start
-
-;now we need to make it move
