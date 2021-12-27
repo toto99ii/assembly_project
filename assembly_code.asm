@@ -259,6 +259,25 @@ proc print_man
     ret
 endp
 
+proc clear_character
+    mov ah, 6
+    mov al, 10
+    mov bh, 00010000b
+    mov ch, 0
+    mov cl, 0
+    mov dh, 15
+    mov dl, 15
+    int 10h
+    mov ah, 4ch
+    int 21h
+    ret
+endp
+
+
+proc move_left
+    call clear_character
+    ret
+endp
 
 Start:
     mov ax, @data
@@ -274,9 +293,9 @@ next:
     je right
     jmp next
 left:
-
+    call move_left
 right:
-
+    call move_right
 
 Exit:
     mov ax, 4C00h
