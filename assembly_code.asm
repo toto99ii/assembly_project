@@ -261,15 +261,13 @@ endp
 
 proc clear_character
     mov ah, 6
-    mov al, 10
-    mov bh, 00010000b
-    mov ch, 0
+    mov al, 21
+    mov bh, 11110000h
+    mov ch, 180
     mov cl, 0
-    mov dh, 15
-    mov dl, 15
+    mov dh, 200
+    mov dl, 255
     int 10h
-    mov ah, 4ch
-    int 21h
     ret
 endp
 
@@ -279,19 +277,32 @@ proc move_left
     ret
 endp
 
+proc move_right
+    call clear_character
+    ret
+endp
+
 Start:
     mov ax, @data
     mov ds, ax
 
+    mov ah, 6
+    mov al, 21
+    mov bh, 11110000h
+    mov ch, 180
+    mov cl, 0
+    mov dh, 200
+    mov dl, 255
+    int 10h
     call print_man
-next:
+hey:
     mov ah, 07h
     int 21h
     cmp al, "a"
     je left
     cmp al, "d"
     je right
-    jmp next
+    jmp hey
 left:
     call move_left
 right:
