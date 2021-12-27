@@ -265,8 +265,17 @@ Start:
     mov ds, ax
 
     call print_man
+next:
     mov ah, 07h
     int 21h
+    cmp al, "a"
+    je left
+    cmp al, "d"
+    je right
+    jmp next
+left:
+
+right:
 
 
 Exit:
