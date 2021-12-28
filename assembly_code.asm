@@ -16,32 +16,6 @@ proc enter_graphic_mode
     ret
 endp
 
-proc print_dot_from_memory
-    push bx
-    push cx
-    push dx
-
-    mov bh, 0h 
-    mov cx, [x] 
-    mov dx, [y] 
-    mov al, [color] 
-    mov ah, 0ch 
-    int 10h
-
-    pop dx
-    pop cx
-    pop bx
-    ret
-endp
-proc color_pixel
-    call enter_graphic_mode
-
-next:
-    call print_dot_from_memory
-
-    ret
-endp
-
 proc print_man
     call enter_graphic_mode
     push bx
