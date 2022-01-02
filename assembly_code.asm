@@ -17,13 +17,13 @@ proc enter_graphic_mode
 endp
 
 proc print_man
-    call enter_graphic_mode
     push bx
     push cx
     push dx
+    mov bh, 0
+    mov cx, bx
     mov bh, 0h 
     mov al, [color] 
-    mov cx, [x]
     mov dx, [y]
 ;starting to draw a man
 ;start legs
@@ -226,14 +226,14 @@ proc print_man
 ;finish neck now reset
     add dx, 10
     sub cx, 2
-
+    mov bl, cl
     pop dx
     pop cx
     pop bx
     ret
 endp
 
-proc clear_character
+proc clear_character  
     mov ah, 6
     mov al, 21
     mov bh, 11110000h
@@ -242,32 +242,31 @@ proc clear_character
     mov dh, 200
     mov dl, 255
     int 10h
+    mov ah, 4ch
+    int 21h
     ret
 endp
 
 
 proc move_left
     call clear_character
+    sub bl, 1
+    call print_man
     ret
 endp
 
 proc move_right
     call clear_character
+    add bl, 1
+    call print_man
     ret
 endp
 
 Start:
     mov ax, @data
     mov ds, ax
-
-    mov ah, 6
-    mov al, 21
-    mov bh, 11110000h
-    mov ch, 180
-    mov cl, 0
-    mov dh, 200
-    mov dl, 255
-    int 10h
+    call enter_graphic_mode
+    mov bl, 158
     call print_man
 hey:
     mov ah, 07h
