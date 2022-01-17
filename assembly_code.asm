@@ -251,14 +251,14 @@ endp
 
 proc move_left
     call clear_character
-    sub loc_x, 50
+    dec loc_x
     call print_man
     ret
 endp
 
 proc move_right
     call clear_character
-    add loc_x, 50
+    inc loc_x
     call print_man
     ret
 endp
