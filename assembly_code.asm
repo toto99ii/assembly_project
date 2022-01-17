@@ -251,14 +251,14 @@ endp
 
 proc move_left
     call clear_character
-    sub loc_x, 5
+    sub loc_x, 50
     call print_man
     ret
 endp
 
 proc move_right
     call clear_character
-    add loc_x, 5
+    add loc_x, 50
     call print_man
     ret
 endp
@@ -279,9 +279,10 @@ hey:
     jmp hey
 left:
     call move_left
+    jmp hey
 right:
     call move_right
-
+    jmp hey
 Exit:
     mov ax, 4C00h
     int 21h
