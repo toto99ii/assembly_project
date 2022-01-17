@@ -8,6 +8,8 @@ DATASEG
 x dw 158
 y dw 199
 color db 15
+loc_x dw 158
+loc_y dw 199
 
 CODESEG
 proc enter_graphic_mode
@@ -20,11 +22,10 @@ proc print_man
     push bx
     push cx
     push dx
-    mov bh, 0
-    mov cx, bx
+    mov cx, [loc_x]
     mov bh, 0h 
-    mov al, [color] 
-    mov dx, [y]
+    mov al, [color]
+    mov dx, [loc_y]
 ;starting to draw a man
 ;start legs
     mov ah, 0ch 
@@ -250,14 +251,14 @@ endp
 
 proc move_left
     call clear_character
-    sub bl, 1
+    sub loc_x, 5
     call print_man
     ret
 endp
 
 proc move_right
     call clear_character
-    add bl, 1
+    add loc_x, 5
     call print_man
     ret
 endp
