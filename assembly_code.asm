@@ -23,7 +23,7 @@ proc print_man
     push cx
     push dx
     mov cx, [loc_x]
-    mov bh, 0h 
+    mov bh, 0h
     mov al, [color]
     mov dx, [loc_y]
 ;starting to draw a man
@@ -234,39 +234,21 @@ proc print_man
     ret
 endp
 
-proc clear_character  
-    push ax
-    push bx
-    push cx
-    push dx
-    mov ah, 6
-    mov al, 21
-    mov bh, 11110000h
-    mov ch, 180
-    mov cl, 0
-    mov dh, 200
-    mov dl, 255
-    int 10h
-    mov ah, 4ch
-    int 21h
-    pop ax
-    pop bx
-    pop cx
-    pop dx
-    ret
-endp
-
 
 proc move_left
-    call clear_character
-    dec loc_x
+    mov [color], 0
+    call print_man
+    dec [loc_x]
+    mov [color], 15
     call print_man
     ret
 endp
 
 proc move_right
-    call clear_character
-    inc loc_x
+    mov [color], 0
+    call print_man
+    inc [loc_x]
+    mov [color], 15
     call print_man
     ret
 endp
