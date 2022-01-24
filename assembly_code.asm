@@ -11,7 +11,22 @@ color db 15
 loc_x dw 158
 loc_y dw 199
 NextRandom dw 0
-
+coin dw {
+    00b, 00b, 00b, 00b, 00b, 02b, 02b, 02b, 02b, 02b, 00b, 00b, 00b, 00b, 00b,
+    00b, 00b, 00b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 00b, 00b, 00b,
+    00b, 00b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 00b, 00b,
+    00b, 02b, 02b, 02b, 02b, 02b, 02b, 01b, 02b, 02b, 02b, 02b, 02b, 02b, 00b,
+    00b, 02b, 02b, 02b, 02b, 01b, 01b, 01b, 01b, 01b, 02b, 02b, 02b, 02b, 00b,
+    02b, 02b, 02b, 02b, 02b, 01b, 02b, 01b, 02b, 02b, 02b, 02b, 02b, 02b, 02b,
+    02b, 02b, 02b, 02b, 02b, 01b, 02b, 01b, 02b, 02b, 02b, 02b, 02b, 02b, 02b,
+    02b, 02b, 02b, 02b, 02b, 01b, 01b, 01b, 01b, 01b, 02b, 02b, 02b, 02b, 02b,
+    02b, 02b, 02b, 02b, 02b, 02b, 02b, 01b, 02b, 01b, 02b, 02b, 02b, 02b, 02b,
+    02b, 02b, 02b, 02b, 02b, 02b, 02b, 01b, 02b, 01b, 02b, 02b, 02b, 02b, 02b,
+    00b, 02b, 02b, 02b, 02b, 01b, 01b, 01b, 01b, 01b, 02b, 02b, 02b, 02b, 00b,
+    00b, 02b, 02b, 02b, 02b, 02b, 02b, 01b, 02b, 02b, 02b, 02b, 02b, 02b, 00b,
+    00b, 00b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 00b, 00b,
+    00b, 00b, 00b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 02b, 00b, 00b, 00b,
+    00b, 00b, 00b, 00b, 00b, 02b, 02b, 02b, 02b, 02b, 00b, 00b, 00b, 00b, 00b, }
 
 CODESEG
 proc enter_graphic_mode
@@ -236,7 +251,7 @@ proc print_man
     ret
 endp
 
-proc prg
+proc rand
     push dx
     xor dx, dx
 
@@ -250,9 +265,12 @@ proc prg
 
     pop dx
     ret
-endp prg
+endp rand
 
 proc draw_coin
+    
+    ret
+endp draw_coin
 
 proc move_left
     mov [color], 0
@@ -300,14 +318,13 @@ END start
 
 
 
-    ; random numbers
+        ; random numbers
 
-    ; get time
+        ; get time
     ; mov ah, 2Ch 
     ; int 21h
-
-    ; set seed as secs:mi secs
+        ; set seed as secs:mi secs
     ; mov [NextRandom], dx
-    
-    ; get (pseudo) random number
-    ; call prg
+        ; get (pseudo) random number
+    ; call rand
+        ; returns it in ax
