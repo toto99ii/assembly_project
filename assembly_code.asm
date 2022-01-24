@@ -235,6 +235,10 @@ proc print_man
 endp
 
 proc clear_character  
+    push ax
+    push bx
+    push cx
+    push dx
     mov ah, 6
     mov al, 21
     mov bh, 11110000h
@@ -245,6 +249,10 @@ proc clear_character
     int 10h
     mov ah, 4ch
     int 21h
+    pop ax
+    pop bx
+    pop cx
+    pop dx
     ret
 endp
 
@@ -270,6 +278,7 @@ Start:
     mov bl, 158
     call print_man
 hey:
+    mov al, 0h
     mov ah, 07h
     int 21h
     cmp al, "a"
