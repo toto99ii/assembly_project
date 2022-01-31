@@ -41,6 +41,10 @@ Start:
     
     ;; get (pseudo) random number
     call prg
+    mov bx, 320
+    mov dx, 0
+    div bx
+    jmp start
 
 Exit:
     mov ax, 4C00h
