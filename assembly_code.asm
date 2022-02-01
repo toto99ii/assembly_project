@@ -276,7 +276,7 @@ proc draw_coin
     mov ah, 0ch
     int 10h
     sub cx, 6
-    add dx 1
+    add dx, 1
     mov ah, 0ch
     int 10h
     add cx, 1
