@@ -259,7 +259,6 @@ proc draw_coin
     mov cx, [xcoin]
     mov bh, 0h
     mov dx, 0
-    ;drawing the yellow
     mov al, 14
     mov ah, 0ch
     int 10h
@@ -303,8 +302,8 @@ proc draw_coin
     add cx, 1
     mov ah, 0ch
     int 10h
-    sub cx, 1
-    add dx, 9
+    sub cx, 9
+    add dx, 1
     mov ah, 0ch
     int 10h
     add cx, 1
@@ -374,46 +373,382 @@ proc draw_coin
     add cx, 1
     mov ah, 0ch
     int 10h
+    sub cx, 12
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 6
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
     sub cx, 13
     add dx, 1
     mov ah, 0ch
     int 10h
-
-;  00h, 02h, 02h, 02h, 02h, 01h, 01h, 01h, 01h, 01h, 02h, 02h, 02h, 02h, 00h
-;  02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 02h
-;  02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 02h
-;  02h, 02h, 02h, 02h, 02h, 01h, 01h, 01h, 01h, 01h, 02h, 02h, 02h, 02h, 02h
-;  02h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h
-;  02h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h
-;  00h, 02h, 02h, 02h, 02h, 01h, 01h, 01h, 01h, 01h, 02h, 02h, 02h, 02h, 00h
-;  00h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 00h
-;  00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h
-;  00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h
-;  00h, 00h, 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h, 00h, 00h
+    add cx, 1
+    mov ah, 0ch
     int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 14
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 14
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 6
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 14
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 14
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 13
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 6
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 12
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 2
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 11
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 9
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    sub cx, 6
+    add dx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    add cx, 1
+    mov ah, 0ch
+    int 10h
+    pop bx
+    pop cx
+    pop dx
     ret
 endp draw_coin
 
 proc randax
     push dx
     xor dx, dx
-
     mov ax, [NextRandom]
     mov dx, 25173
     imul dx
-
     add  ax, 13849
     xor  ax, 62832
     mov  [NextRandom], ax
-
     pop dx
     ret
 endp randax
 
 proc rand_pos
-    push ax
-    push bx
-    push dx
     mov ah, 2Ch 
     int 21h
     mov [NextRandom], dx
@@ -421,11 +756,8 @@ proc rand_pos
     mov bx, 280
     mov dx, 0
     div bx
-    add bx, 10
-    mov [xcoin], bx
-    pop ax
-    pop bx
-    pop dx
+    add dx, 10
+    mov [xcoin], dx
     ret
 endp rand_pos
 
@@ -476,7 +808,7 @@ right:
     call move_right
     jmp hey
 game:
-    call start_game
+    call draw_coin
     jmp hey
 Exit:
     mov ax, 4C00h
