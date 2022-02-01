@@ -27,6 +27,8 @@ coin1 dw 00h, 00h, 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h, 00h, 0
       dw 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h
       dw 00h, 00h, 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h, 00h, 00h
 xcoin dw 0
+timer dw 0
+game_started db 0
 
 CODESEG
 proc enter_graphic_mode
@@ -733,7 +735,7 @@ proc draw_coin
     pop cx
     pop dx
     ret
-endp draw_coin
+endp 
 
 proc randax
     push dx
@@ -746,7 +748,7 @@ proc randax
     mov  [NextRandom], ax
     pop dx
     ret
-endp randax
+endp 
 
 proc rand_pos
     mov ah, 2Ch 
@@ -759,7 +761,7 @@ proc rand_pos
     add dx, 10
     mov [xcoin], dx
     ret
-endp rand_pos
+endp 
 
 proc move_left
     mov [color], 0
@@ -779,8 +781,14 @@ proc move_right
     ret
 endp
 
-proc start_game
-
+proc coins_generator
+    add [timer], 1
+    cmp [timer], 50
+    je coin
+    ret
+coin:
+    call draw_coin
+    mov [timer], 0
     ret
 endp
 
@@ -800,6 +808,8 @@ hey:
     je right
     cmp al, " "
     je game
+    cmp [game_started], 1
+    je generate_coin
     jmp hey
 left:
     call move_left
@@ -808,7 +818,10 @@ right:
     call move_right
     jmp hey
 game:
-    call draw_coin
+    mov [game_started], 1
+    jmp hey
+generate_coin:
+    call coins_generator
     jmp hey
 Exit:
     mov ax, 4C00h
