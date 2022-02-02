@@ -839,7 +839,7 @@ move_coin:
     call draw_coin
     cmp [hight], 195
     jge lose
-    cmp [hight], 160
+    cmp [hight], 165
     jge may_touch
     jmp hey
 lose:
@@ -852,9 +852,9 @@ may_touch:
     mov [touch_check], ax
     mov ax, [xcoin]
     sub [touch_check], ax
-    cmp [touch_check], 10
+    cmp [touch_check], 15
     jg hey
-    cmp [touch_check], -10
+    cmp [touch_check], -15
     jl hey1
     call touch
 generate_coin:
