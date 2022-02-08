@@ -807,9 +807,9 @@ Start:
     mov bl, 158
     call print_man
 hey:
-    mov al, 0h
-    mov ah, 07h
-    int 21h
+    mov al, 0h ;        ־\_
+    mov ah, 07h;           |-  need to work on to debug
+    int 21h    ;        _/־
     cmp al, " "
     je game
     cmp [game_started], 0
