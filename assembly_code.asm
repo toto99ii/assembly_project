@@ -34,6 +34,7 @@ coin_active db 0
 color_coin db 0
 touch_check dw 0
 score dw 0
+speed dw 200
 
 CODESEG
 proc enter_graphic_mode
@@ -799,6 +800,7 @@ proc touch
     call draw_coin
     mov [coin_active], 0
     add [score], 1
+    sub [speed], 5
     ret
 endp
 
@@ -828,6 +830,24 @@ exit1:
 endp
 
 proc Ulose
+    mov dl, 73h
+    mov ah, 02h
+    int 21h
+    mov dl, 63h
+    mov ah, 02h
+    int 21h
+    mov dl, 6Fh
+    mov ah, 02h
+    int 21h
+    mov dl, 72h
+    mov ah, 02h
+    int 21h
+    mov dl, 65h
+    mov ah, 02h
+    int 21h
+    mov dl, 3Ah
+    mov ah, 02h
+    int 21h
     mov ax, [score]
     call print
 stop:
@@ -855,7 +875,8 @@ hey:
     cmp al, "d"
     je right
     add [timer], 1
-    cmp [timer], 150
+    mov ax, [speed]
+    cmp [timer], ax
     jge one
     jmp hey
 one:
