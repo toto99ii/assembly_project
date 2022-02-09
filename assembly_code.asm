@@ -33,6 +33,7 @@ hight dw 0
 coin_active db 0
 color_coin db 0
 touch_check dw 0
+score dw 0
 
 CODESEG
 proc enter_graphic_mode
@@ -769,7 +770,7 @@ endp
 proc move_left
     mov [color], 0
     call print_man
-    sub [loc_x], 3
+    sub [loc_x], 5
     mov [color], 15
     call print_man
     ret
@@ -778,7 +779,7 @@ endp
 proc move_right
     mov [color], 0
     call print_man
-    add [loc_x], 3
+    add [loc_x], 5
     mov [color], 15
     call print_man
     ret
@@ -797,7 +798,40 @@ proc touch
     mov [color_coin], 0
     call draw_coin
     mov [coin_active], 0
+    add [score], 1
     ret
+endp
+
+proc print
+	mov cx,0
+	mov dx,0
+label1:
+	cmp ax,0
+	je print1
+	mov bx,10
+	div bx
+	push dx
+	inc cx
+	xor dx,dx
+	jmp label1
+print1:
+	cmp cx,0
+	je exit1
+	pop dx
+	add dx,48
+	mov ah,02h
+	int 21h
+	dec cx
+	jmp print1
+exit1:
+   ret
+endp
+
+proc Ulose
+    mov ax, [score]
+    call print
+stop:
+    jmp stop
 endp
 
 Start:
@@ -807,9 +841,11 @@ Start:
     mov bl, 158
     call print_man
 hey:
-    mov al, 0h ;        ־\_
-    mov ah, 07h;           |-  need to work on to debug
-    int 21h    ;        _/־
+    mov al, 0h
+    mov dl, 255
+    mov ah, 06h
+    int 21h
+    cmp al, 0h
     cmp al, " "
     je game
     cmp [game_started], 0
@@ -818,7 +854,12 @@ hey:
     je left
     cmp al, "d"
     je right
+    add [timer], 1
+    cmp [timer], 150
+    jge one
+    jmp hey
 one:
+    mov [timer], 0
     cmp [coin_active], 1
     je move_coin
     jmp generate_coin
@@ -846,6 +887,7 @@ lose:
     mov [color_coin], 0
     call draw_coin
     mov [coin_active], 0
+    call Ulose
     jmp hey
 may_touch:
     mov ax, [loc_x]
@@ -853,14 +895,14 @@ may_touch:
     mov ax, [xcoin]
     sub [touch_check], ax
     cmp [touch_check], 15
-    jg hey
+    jg jhey
     cmp [touch_check], -15
-    jl hey1
+    jl jhey
     call touch
 generate_coin:
     call coins_generator
     jmp hey
-hey1:
+jhey:
     jmp hey
 Exit:
     mov ax, 4C00h
