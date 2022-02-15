@@ -5,27 +5,14 @@ MODEL small
 STACK 256
 
 DATASEG
+
+
 x dw 158
 y dw 199
 color db 15
 loc_x dw 158
-loc_y dw 199
+loc_y dw 160
 NextRandom dw 0
-coin1 dw 00h, 00h, 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h, 00h, 00h
-      dw 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h
-      dw 00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h
-      dw 00h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 00h
-      dw 00h, 02h, 02h, 02h, 02h, 01h, 01h, 01h, 01h, 01h, 02h, 02h, 02h, 02h, 00h
-      dw 02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 02h
-      dw 02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 02h
-      dw 02h, 02h, 02h, 02h, 02h, 01h, 01h, 01h, 01h, 01h, 02h, 02h, 02h, 02h, 02h
-      dw 02h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h
-      dw 02h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 01h, 02h, 02h, 02h, 02h, 02h
-      dw 00h, 02h, 02h, 02h, 02h, 01h, 01h, 01h, 01h, 01h, 02h, 02h, 02h, 02h, 00h
-      dw 00h, 02h, 02h, 02h, 02h, 02h, 02h, 01h, 02h, 02h, 02h, 02h, 02h, 02h, 00h
-      dw 00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h
-      dw 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h
-      dw 00h, 00h, 00h, 00h, 00h, 02h, 02h, 02h, 02h, 02h, 00h, 00h, 00h, 00h, 00h
 xcoin dw 0
 timer dw 0
 game_started db 0
@@ -34,14 +21,20 @@ coin_active db 0
 color_coin db 0
 touch_check dw 0
 score dw 0
-speed dw 200
+speed dw 2000
+scroll dw 20
+
 
 CODESEG
+
+
 proc enter_graphic_mode
     mov ax, 13h
     int 10h
     ret
 endp
+
+
 
 proc print_man
     push bx
@@ -258,6 +251,8 @@ proc print_man
     pop bx
     ret
 endp
+
+
 
 proc draw_coin
     push bx
@@ -740,7 +735,9 @@ proc draw_coin
     pop cx
     pop dx
     ret
-endp 
+endp
+ 
+
 
 proc randax
     push dx
@@ -753,7 +750,9 @@ proc randax
     mov  [NextRandom], ax
     pop dx
     ret
-endp 
+endp
+ 
+
 
 proc rand_pos
     mov ah, 2Ch 
@@ -766,7 +765,9 @@ proc rand_pos
     add dx, 10
     mov [xcoin], dx
     ret
-endp 
+endp
+ 
+
 
 proc move_left
     mov [color], 0
@@ -777,6 +778,8 @@ proc move_left
     ret
 endp
 
+
+
 proc move_right
     mov [color], 0
     call print_man
@@ -785,6 +788,8 @@ proc move_right
     call print_man
     ret
 endp
+
+
 
 proc coins_generator
     call rand_pos
@@ -795,18 +800,24 @@ proc coins_generator
     ret
 endp
 
+
+
 proc touch
     mov [color_coin], 0
     call draw_coin
     mov [coin_active], 0
     add [score], 1
     sub [speed], 5
+    mov [scroll], 10
     ret
 endp
+
+
 
 proc print
 	mov cx,0
 	mov dx,0
+
 label1:
 	cmp ax,0
 	je print1
@@ -816,6 +827,7 @@ label1:
 	inc cx
 	xor dx,dx
 	jmp label1
+
 print1:
 	cmp cx,0
 	je exit1
@@ -825,9 +837,12 @@ print1:
 	int 21h
 	dec cx
 	jmp print1
+
 exit1:
    ret
 endp
+
+
 
 proc Ulose
     mov dl, 73h
@@ -850,9 +865,12 @@ proc Ulose
     int 21h
     mov ax, [score]
     call print
+
 stop:
     jmp stop
 endp
+
+
 
 Start:
     mov ax, @data
@@ -860,6 +878,7 @@ Start:
     call enter_graphic_mode
     mov bl, 158
     call print_man
+
 hey:
     mov al, 0h
     mov dl, 255
@@ -879,24 +898,45 @@ hey:
     cmp [timer], ax
     jge one
     jmp hey
+
 one:
     mov [timer], 0
     cmp [coin_active], 1
     je move_coin
     jmp generate_coin
+
 left:
     call move_left
     jmp one
+
 right:
     call move_right
     jmp one
+
 game:
     mov [game_started], 1
     jmp hey
+
 move_coin:
     mov [color_coin], 0
     call draw_coin
-    add [hight], 1
+    mov ax, [scroll]
+    add [hight], ax
+    cmp [scroll], 10
+    jge sub_3
+    cmp [scroll], 0
+    jg sub_2
+    jle sub_1
+
+sub_3:
+    sub [scroll], 1
+sub_2:
+    sub [scroll], 1
+sub_1:
+    sub [scroll], 1
+
+cointinue:
+    sub [scroll], 1
     mov [color_coin], 14
     call draw_coin
     cmp [hight], 195
@@ -904,12 +944,14 @@ move_coin:
     cmp [hight], 165
     jge may_touch
     jmp hey
+
 lose:
     mov [color_coin], 0
     call draw_coin
     mov [coin_active], 0
     call Ulose
     jmp hey
+
 may_touch:
     mov ax, [loc_x]
     mov [touch_check], ax
@@ -920,12 +962,22 @@ may_touch:
     cmp [touch_check], -15
     jl jhey
     call touch
+
 generate_coin:
     call coins_generator
     jmp hey
+
 jhey:
     jmp hey
+
 Exit:
     mov ax, 4C00h
     int 21h
 END start
+
+; F  1715
+; G  1521
+
+; F 6833
+; B 4831
+; C 4560
