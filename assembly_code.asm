@@ -974,10 +974,3 @@ Exit:
     mov ax, 4C00h
     int 21h
 END start
-
-; F  1715
-; G  1521
-
-; F 6833
-; B 4831
-; C 4560
