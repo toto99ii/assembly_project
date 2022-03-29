@@ -21,8 +21,8 @@ coin_active db 0
 color_coin db 0
 touch_check dw 0
 score dw 0
-speed dw 2000
-scroll dw 20
+scroll dw 35
+yesno db 0
 
 
 CODESEG
@@ -807,8 +807,7 @@ proc touch
     call draw_coin
     mov [coin_active], 0
     add [score], 1
-    sub [speed], 5
-    mov [scroll], 10
+    mov [scroll], 35
     ret
 endp
 
@@ -893,8 +892,8 @@ hey:
     je left
     cmp al, "d"
     je right
-    add [timer], 1
-    mov ax, [speed]
+    inc [timer]
+    mov ax, 3000
     cmp [timer], ax
     jge one
     jmp hey
@@ -918,15 +917,14 @@ game:
     jmp hey
 
 move_coin:
+    cmp [yesno], 3
+    jle no
+    cmp [scroll], 0
+    jle move_neg
     mov [color_coin], 0
     call draw_coin
     mov ax, [scroll]
     add [hight], ax
-    cmp [scroll], 10
-    jge sub_3
-    cmp [scroll], 0
-    jg sub_2
-    jle sub_1
 
 sub_3:
     sub [scroll], 1
@@ -934,23 +932,41 @@ sub_2:
     sub [scroll], 1
 sub_1:
     sub [scroll], 1
+    jmp cointinue
+
+move_neg:
+    mov [color_coin], 0
+    call draw_coin
+    mov ax, [scroll]
+    add [hight], ax
+    mov [yesno], 0
+    cmp [scroll], -5
+    jl sub_2
+    jmp sub_1
+
+no:
+    inc [yesno]
 
 cointinue:
     sub [scroll], 1
     mov [color_coin], 14
     call draw_coin
-    cmp [hight], 195
-    jge lose
-    cmp [hight], 165
+    cmp [hight], 15
+    jle may_lose
+    cmp [hight], 120
     jge may_touch
     jmp hey
 
+may_lose:
+    cmp [scroll], 0
+    jle lose
+    jmp jhey
 lose:
     mov [color_coin], 0
     call draw_coin
     mov [coin_active], 0
     call Ulose
-    jmp hey
+    jmp jhey
 
 may_touch:
     mov ax, [loc_x]
@@ -973,4 +989,4 @@ jhey:
 Exit:
     mov ax, 4C00h
     int 21h
-END start
+END start 
