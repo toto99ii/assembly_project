@@ -1,10 +1,21 @@
 IDEAL
 
+
+
+
 MODEL small
+
+
+
 
 STACK 256
 
+
+
+
 DATASEG
+
+
 
 
 x dw 158
@@ -16,16 +27,21 @@ NextRandom dw 0
 xcoin dw 0
 timer dw 0
 game_started db 0
-hight dw 0
+hight dw -5
 coin_active db 0
-color_coin db 0
+color_coin db 1
 touch_check dw 0
 score dw 0
 scroll dw 35
-yesno db 0
+yesno dw 0
+s dw 3
+
+
 
 
 CODESEG
+
+
 
 
 proc enter_graphic_mode
@@ -37,15 +53,19 @@ endp
 
 
 proc print_man
+
     push bx
     push cx
     push dx
+
     mov cx, [loc_x]
     mov bh, 0h
     mov al, [color]
     mov dx, [loc_y]
+
 ;starting to draw a man
 ;start legs
+
     mov ah, 0ch 
     int 10h
     add cx, 1
@@ -83,8 +103,10 @@ proc print_man
     int 10h
     add cx, 1
     mov ah, 0ch 
-    int 10h         
+    int 10h       
+
 ;finish legs start body
+
     sub dx, 5
     mov ah, 0ch 
     int 10h
@@ -121,8 +143,10 @@ proc print_man
     int 10h
     add dx, 1
     mov ah, 0ch 
-    int 10h                     
+    int 10h        
+
 ;finish body start right hand
+
     add cx, 6
     mov ah, 0ch 
     int 10h
@@ -139,7 +163,9 @@ proc print_man
     sub dx, 1
     mov ah, 0ch 
     int 10h                     
+
 ;finish right hand start left hand
+
     sub cx, 5
     sub dx, 1
     mov ah, 0ch 
@@ -164,7 +190,9 @@ proc print_man
     sub dx, 1
     mov ah, 0ch 
     int 10h                 
+
 ;finish left hand start head outline
+
     add cx, 3
     mov ah, 0ch 
     int 10h
@@ -221,7 +249,9 @@ proc print_man
     sub dx, 1
     mov ah, 0ch 
     int 10h                         
+
 ;finish head outline start inner head
+
     add cx, 2
     mov ah, 0ch 
     int 10h
@@ -237,15 +267,20 @@ proc print_man
     sub cx, 2
     mov ah, 0ch 
     int 10h                         
+
 ;finish inner head start neck
+
     add cx, 1
     add dx, 5
     mov ah, 0ch 
     int 10h
+
 ;finish neck now reset
+
     add dx, 10
     sub cx, 2
     mov bl, cl
+
     pop dx
     pop cx
     pop bx
@@ -258,10 +293,12 @@ proc draw_coin
     push bx
     push cx
     push dx
+
     mov cx, [xcoin]
     mov bh, 0h
     mov dx, [hight]
     mov al, [color_coin]
+
     mov ah, 0ch
     int 10h
     add cx, 1
@@ -731,16 +768,18 @@ proc draw_coin
     add cx, 1
     mov ah, 0ch
     int 10h
+
     pop bx
     pop cx
     pop dx
     ret
 endp
- 
+
 
 
 proc randax
     push dx
+
     xor dx, dx
     mov ax, [NextRandom]
     mov dx, 25173
@@ -748,6 +787,7 @@ proc randax
     add  ax, 13849
     xor  ax, 62832
     mov  [NextRandom], ax
+
     pop dx
     ret
 endp
@@ -770,7 +810,7 @@ endp
 
 
 proc move_left
-    mov [color], 0
+    mov [color], 1
     call print_man
     sub [loc_x], 5
     mov [color], 15
@@ -781,7 +821,7 @@ endp
 
 
 proc move_right
-    mov [color], 0
+    mov [color], 1
     call print_man
     add [loc_x], 5
     mov [color], 15
@@ -793,7 +833,7 @@ endp
 
 proc coins_generator
     call rand_pos
-    mov [hight], 0
+    mov [hight], -5
     mov [coin_active], 1
     mov [color_coin], 14
     call draw_coin
@@ -803,7 +843,7 @@ endp
 
 
 proc touch
-    mov [color_coin], 0
+    mov [color_coin], 1
     call draw_coin
     mov [coin_active], 0
     add [score], 1
@@ -847,21 +887,27 @@ proc Ulose
     mov dl, 73h
     mov ah, 02h
     int 21h
+
     mov dl, 63h
     mov ah, 02h
     int 21h
+
     mov dl, 6Fh
     mov ah, 02h
     int 21h
+
     mov dl, 72h
     mov ah, 02h
     int 21h
+
     mov dl, 65h
     mov ah, 02h
     int 21h
+
     mov dl, 3Ah
     mov ah, 02h
     int 21h
+
     mov ax, [score]
     call print
 
@@ -874,7 +920,16 @@ endp
 Start:
     mov ax, @data
     mov ds, ax
+
     call enter_graphic_mode
+
+    mov ah, 06h
+    xor al, al
+    xor cx, cx
+    mov dx, 184FH
+    mov bh, 1
+    int 10h
+
     mov bl, 158
     call print_man
 
@@ -882,6 +937,7 @@ hey:
     mov al, 0h
     mov dl, 255
     mov ah, 06h
+
     int 21h
     cmp al, 0h
     cmp al, " "
@@ -917,25 +973,41 @@ game:
     jmp hey
 
 move_coin:
-    cmp [yesno], 3
+    mov ax, [s]
+    cmp [yesno], ax
     jle no
     cmp [scroll], 0
+    jz zero
+    jmp nzero
+
+zero:
+    mov [s], 10
+    mov [yesno], 0
+    jmp move_coin1
+
+nzero:
+    mov [s], 3
+
+move_coin1:
+    cmp [scroll], 0
     jle move_neg
-    mov [color_coin], 0
+    mov [color_coin], 1
     call draw_coin
     mov ax, [scroll]
     add [hight], ax
 
 sub_3:
     sub [scroll], 1
+
 sub_2:
     sub [scroll], 1
+    
 sub_1:
     sub [scroll], 1
     jmp cointinue
 
 move_neg:
-    mov [color_coin], 0
+    mov [color_coin], 1
     call draw_coin
     mov ax, [scroll]
     add [hight], ax
@@ -961,8 +1033,9 @@ may_lose:
     cmp [scroll], 0
     jle lose
     jmp jhey
+
 lose:
-    mov [color_coin], 0
+    mov [color_coin], 1
     call draw_coin
     mov [coin_active], 0
     call Ulose
